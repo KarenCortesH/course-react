@@ -1,7 +1,7 @@
 //Turnos
 export const Turns = {
-    X: 'X',
-    O: 'O'
+    X: '❌',
+    O: '⚪'
 }
 //Combinaciones ganadoras
 export const WINNER_COMBOS = [

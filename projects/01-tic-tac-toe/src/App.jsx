@@ -8,11 +8,18 @@ import './App.css'
 
 function App() {
   //tablero
-  const [board, setBoard] = useState(Array(9).fill(null));
-  //console.log(board);
-
+  console.log('Render');
+  const [board, setBoard] = useState(() => {
+    console.log('Inicializar Estado');
+    const boardFromStorage = window.localStorage.getItem('board')
+    if (boardFromStorage) return JSON.parse(boardFromStorage)
+    return Array(9).fill(null)
+  })
   //Saber el turno de quien
-  const [turn, setTurn] = useState(Turns.X)
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('Turn')
+    return turnFromStorage ?? Turns.X;
+  })
 
   //Seleccionar Ganador - null = no hay ganador - false= Empate
   const [winner, setWinner] = useState(null);
@@ -39,6 +46,9 @@ function App() {
     const newTurn = turn == Turns.X ? Turns.O : Turns.X
     setTurn(newTurn);
 
+    //Guardar partida y turno en la partida
+    window.localStorage.setItem('board', JSON.stringify(newBoard));
+    window.localStorage.setItem('turn', newTurn);
     //Revisamos si hay un ganador
     const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
