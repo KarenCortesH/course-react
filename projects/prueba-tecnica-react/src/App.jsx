@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react'
-const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact'
-// const CAT_ENDPOINT_IMAGE_URL = `https://cataas.com/cat/says/{firstWord}?size=50&color=red&json=true`
+import './App.css'
+import { useCatImage } from './hooks/useCatImage'
+import { useCatFact } from './hooks/seCatFact'
+
 export function App () {
-  const [fact, setFact] = useState()
-  // fetching de datos con la api que nos pasen utilizando el useState
-  useEffect(() => {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then(res => res.json())
-      .then(data => setFact(data.fact))
-  }, [])
+  const { fact, refreshFact } = useCatFact()
+  const { imageUrl } = useCatImage({ fact })
+
+  const handleClick = async () => {
+    refreshFact()
+  }
 
   return (
     <main>
-      <h1>App de Gatitos</h1>
-      <br />
+      <h1>App de gatitos</h1>
+
+      <button onClick={handleClick}>Get new fact</button>
+
       {fact && <p>{fact}</p>}
+      {imageUrl && <img src={imageUrl} alt={`Image extracted using the first rhee words for ${fact}`} />}
     </main>
   )
 }
