@@ -1,4 +1,6 @@
 import './App.css'
+import ResponseMovies from './mocks/with-results.json'
+import withoutResults  from './mocks/with-results.json'
 
 function App() {
 
