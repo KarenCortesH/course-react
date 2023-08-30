@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-//_Importamos el heading de Chakra
-import { Box, Heading, Image } from '@chakra-ui/react'
+import { Heading, Image } from '@chakra-ui/react'
 import * as API from './services/launches'
+import { LaunchItem } from './components/LaunchItem'
 //aqui importamos el logo
 import logo from './assets/logo-spacex.png'
 export function App() {
@@ -18,11 +18,8 @@ export function App() {
       <Image margin={4} src={logo} width={300}></Image>
       <Heading as="h1" size="lg" margin={4}>SpaceX Launches</Heading>
       <section>
-        {launches.map(launch => (
-          <Box key={launch.flight_number} bg="gray.100" p={4} m={4} borderRadius="lg">
-            {launch.mission_name}({launch.launch_year})
-          </Box>
-
+        {launches.map((launch) => (
+          <LaunchItem key={launch.flight_number} {...launch}></LaunchItem>
         ))}
       </section>
     </>
